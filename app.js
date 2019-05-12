@@ -12,7 +12,11 @@ let addWindow;
 app.on('ready', () => {
 
     // Create new window (Browser Window is electron Object)
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
     // load html into window
     mainWindow.loadURL(url.format({
         // __dirname -> <current_dir>
@@ -40,7 +44,10 @@ let createAddShoppingWindow = () => {
     addWindow = new BrowserWindow({
         width: 300,
         height: 200,
-        title: 'Add Shopping List Item !!'
+        title: 'Add Shopping List Item !!',
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
     // load html into window
     addWindow.loadURL(url.format({

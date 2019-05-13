@@ -2,7 +2,11 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
+
+// SET ENV to production
+process.env.NODE_ENV = 'production'
+// process.env.NODE_ENV = 'development'
 
 // Outer Window
 let mainWindow;
@@ -63,6 +67,14 @@ let createAddShoppingWindow = () => {
     });
 }
 
+
+// !Catch item:add, passing data from add_window to app.js and then app.js to main_window.html
+ipcMain.on('addwindow->app', (event, item) => {
+    console.log(item);
+    mainWindow.webContents.send('app->mainWindow', item); // Passing data frm app.js to main_window.html
+    addWindow.close();
+});
+
 // !Create Menu template
 // *menu in electron is array of object
 const mainMenuTemplate = [
@@ -76,7 +88,10 @@ const mainMenuTemplate = [
                 }
             },
             {
-                label: 'Clear Item'
+                label: 'Clear Item',
+                click() {
+                    mainWindow.webContents.send('item:clear')
+                }
             },
             {
                 label: 'Quit',

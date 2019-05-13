@@ -6,16 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Shopping List Item </title>
+    <!-- Materializecss -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
 </head>
 
 <body>
-    <form>
-        <div>
-            <label for="item">Enter Item</label>
-            <input type="text" name="item" autofocus>
-        </div>
-        <button type="submit">Add</button>
-    </form>
+    <div class="container">
+        <form>
+            <div>
+                <label for="item">Enter Item</label>
+                <input type="text" id="item" name="item" autofocus>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">Add</button>
+        </form>
+    </div>
 
     <script>
         const electron = require('electron');
@@ -24,7 +29,8 @@
         const formElement = document.querySelector('form');
         formElement.addEventListener('submit', (event) => {
             event.preventDefault();
-
+            const item = document.querySelector('#item').value;
+            ipcRenderer.send('addwindow->app', item); // worked like socoket.io (Passing Data from add_window to app.js using ipcRenderer)
         });
     </script>
 </body>

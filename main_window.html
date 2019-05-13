@@ -3,11 +3,51 @@
 
 <head>
     <title>ShoppingList</title>
+    <!-- Materializecss -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
 </head>
 
 <body>
-    ShoppingList
+    <nav>
+        <div class="nav-wrapper">
+            <a class="brand-logo center">ShoppingList</a>
+        </div>
+    </nav>
+
+    <ul>
+
+    </ul>
+
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+        const ulElement = document.querySelector('ul');
+
+        // add item (data txered from app.js to mainwindow)
+        ipcRenderer.on('app->mainWindow', (event, item) => {
+            ulElement.className = 'collection'
+            const liElement = document.createElement('li');
+            const itemText = document.createTextNode(item);
+            liElement.className = 'collection-item'
+            liElement.appendChild(itemText);
+            ulElement.appendChild(liElement);
+        });
+
+        // clear all the items
+        ipcRenderer.on('item:clear', () => {
+            ulElement.innerHTML = '';
+            ul.className = '';
+        });
+
+        // Remove a particular item
+        ulElement.addEventListener('dblclick', (event) => {
+            event.target.remove();
+            if (ulElement.children.length == 0) {
+                ul.className = '';
+            }
+        })
+    </script>
 
 </body>
 

@@ -11,7 +11,7 @@
   "author": "Tejas Shailesh Sabunkar",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^5.0.1",
+    "electron": "^7.2.4",
     "electron-builder": "^20.40.2"
   },
   "dependencies": {
